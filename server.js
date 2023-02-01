@@ -23,9 +23,9 @@ app.get('/tweets/:username', async (req, res) => {
   res.json(tweets);
 });
 
-app.post('/tweets/:username', async (req, res) => {
+app.post('/tweets', async (req, res) => {
   const { text } = req.body;
-  const { username } = req.params;
+  const username = req.headers['x-user'];
   const newTweet = await createTweet(username, text);
   res.json(newTweet);
 });
