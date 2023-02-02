@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const { getTweets, getTweetsByUsername, createTweet, getUserByUsername } = require('./services/database');
 
-const PORT = 3333;
+const PORT = process.env.PORT || 3333;
 const APP_SECRET = 'my-secret-key-1234';
 
 app.use(cors());
