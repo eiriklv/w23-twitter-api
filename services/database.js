@@ -69,8 +69,21 @@ async function createTweet(username, text) {
   return newTweet;
 }
 
+async function getUserByUsername(username) {
+  const result = await database.query(`
+    SELECT
+      *
+    FROM
+      users 
+    WHERE
+      username = $1
+  `, [username]);
+  return result.rows[0];
+}
+
 module.exports = {
   getTweets,
   getTweetsByUsername,
-  createTweet
+  createTweet,
+  getUserByUsername,
 };
