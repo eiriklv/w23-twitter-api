@@ -27,9 +27,19 @@ app.get('/tweets/:username', async (req, res) => {
 
 app.post('/tweets', async (req, res) => {
   const { text } = req.body;
-  const username = req.headers['x-user'];
-  const newTweet = await createTweet(username, text);
-  res.json(newTweet);
+  const token = req.headers['x-token'];
+
+  try {
+    const payload = jwt.verify(token, Buffer.from(APP_SECRET, 'base64'));
+    const username = payload.username;
+  
+    const newTweet = await createTweet(username, text);
+    res.json(newTweet);
+  } catch (error) {
+    res.status(401).send({
+      error: 'Unable to verify token - not able to tweet'
+    });
+  }
 });
 
 app.post('/login', async (req, res) => {
