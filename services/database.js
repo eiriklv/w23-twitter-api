@@ -1,11 +1,9 @@
 const { Pool } = require('pg');
 
+const POSTGRES_URL = process.env.POSTGRES_URL || 'postgresql://postgres:@localhost:5432/twitter';
+
 const database = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'twitter',
-  password: '',
-  port: 5432,
+  connectionString: POSTGRES_URL
 });
 
 async function getTweets() {
